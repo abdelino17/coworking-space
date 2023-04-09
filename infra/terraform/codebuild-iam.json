@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CodeBuildAccessPrincipal",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:SourceArn": "arn:aws:codebuild:us-east-1:757002793316:project/udacity",
+          "aws:SourceAccount": "757002793316"
+        }
+      },
+      "Resource": "arn:aws:ecr:us-east-1:757002793316:repository/analytics"
+    },
+    {
+      "Sid": "ECRAuthPolicy",
+      "Effect": "Allow",
+      "Action": ["ecr:GetAuthorizationToken"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ECRPushPolicy",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:CompleteLayerUpload",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ],
+      "Resource": "arn:aws:ecr:us-east-1:757002793316:repository/analytics"
+    }
+  ]
+}

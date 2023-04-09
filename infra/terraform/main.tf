@@ -302,9 +302,15 @@ resource "aws_iam_role" "codebuild" {
   })
 }
 
-# Attach the IAM policy to the codebuild role
+# Attach the CodeBuild IAM policy to the codebuild role
 resource "aws_iam_role_policy_attachment" "codebuild" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess"
+  role       = aws_iam_role.codebuild.name
+}
+
+# Attach the CloudWatchLogs IAM policy to the codebuild role
+resource "aws_iam_role_policy_attachment" "codebuild" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
   role       = aws_iam_role.codebuild.name
 }
 
