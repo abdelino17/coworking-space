@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics
+  labels:
+    app: analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics
+  template:
+    metadata:
+      labels:
+        app: analytics
+    spec:
+      containers:
+        - name: analytics
+          image: 757002793316.dkr.ecr.us-east-1.amazonaws.com/analytics:latest
+          env:
+            - name: APP_PORT
+              value: "5000"
+            - name: DB_USERNAME
+              value: postgres
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: postgres-password
+          ports:
+            - containerPort: 5000

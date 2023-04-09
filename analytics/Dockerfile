@@ -2,9 +2,7 @@ FROM public.ecr.aws/docker/library/python:3.11-alpine
 
 ENV FLASK_RUN_HOST=0.0.0.0
 
-WORKDIR /
-
-RUN adduser -u 1000 -D app
+WORKDIR /app
 
 RUN apk update && \
     apk add \
@@ -14,13 +12,12 @@ RUN apk update && \
     gcc \
     linux-headers \
     openssl \
-    libffi-dev && \
-    mkdir /app
+    libffi-dev
 
-COPY requirements.txt /app/
+COPY requirements.txt .
 
-RUN cd /app && pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
-COPY . /app
+COPY . .
 
-CMD python app
+CMD python app.py
