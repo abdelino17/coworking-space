@@ -15,7 +15,7 @@ For this project, you are a DevOps engineer who will be collaborating with a tea
 7. [Screenshot of `kubectl describe svc analytics`](screenshots/kubectl_describe_svc_analytics.png)
 8. [Screenshot of `kubectl describe deployment analytics`](screenshots/kubectl_describe_deploy_analytics.png)
 9. [All Kubernetes config files used for deployment (ie YAML files)](analytics/k8s)
-10. [Screenshot of AWS CloudWatch logs for the application](analytics/k8s)
+10. [Screenshot of AWS CloudWatch logs for the application](screenshots/analytics_logs.png)
 11. `README.md`: You are reading it!
 
 ## Dependencies
@@ -39,17 +39,15 @@ For this project, you are a DevOps engineer who will be collaborating with a tea
 
 In this paragraph, I will describe all the steps to deploy the project.
 
-#### 1. Configure a Database
+### 1. Configure a Database
 
 Set up a Postgres database using a Helm Chart.
-
-1. Set up Bitnami Repo
 
 ```bash
 helm repo add bitanmi https://charts.bitnami.com/bitnami
 ```
 
-2. Deploy the infrastructure
+### 2. Deploy the infrastructure
 
 You can create the EKS Cluster via my (custom infra code)[infra/terraform] written in [terraform](https://developer.hashicorp.com/terraform/downloads)
 
@@ -68,7 +66,7 @@ The code will create the following:
 - IAM Role
 - CodeBuild
 
-3. Install PostgreSQL Helm Chart
+### 3. Install PostgreSQL Helm Chart
 
 This Chart requires `aws-ebs-csi-driver` for persistent volume. If you are using your own AWS Account, you can uncomment the file [`ebs-csi-driver.tf`](infra/terraform/csi-driver.tf) to install it.
 
@@ -106,8 +104,9 @@ export POSTGRES_PASSWORD=$(kubectl get secret --namespace default postgresql -o 
 echo $POSTGRES_PASSWORD
 ```
 
-4. Run Seed Files
-   We will need to run the seed files in `db/` in order to create the tables and populate them with data.
+### 4. Run Seed Files
+
+We will need to run the seed files in `db/` in order to create the tables and populate them with data.
 
 ```bash
 kubectl port-forward --namespace default svc/postgresql 5432:5432 &
@@ -164,7 +163,7 @@ $ kubectl apply -f analytics/k8s/deployment.yaml
 $ kubectl apply -f analytics/k8s/service.yaml
 ```
 
-3. Verifying The Application
+### 3. Verifying The Application
 
 Get the application URL with this command:
 
