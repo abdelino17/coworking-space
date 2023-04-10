@@ -24,7 +24,7 @@ spec:
             - name: DB_USERNAME
               value: postgres
             - name: DB_HOST
-              value: postgresql
+              value: postgresql.default.svc.cluster.local
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:

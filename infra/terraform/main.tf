@@ -251,6 +251,26 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
+data "aws_iam_policy_document" "codebuild_ecr_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ecr:GetAuthorizationToken"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ecr:*"
+    ]
+    resources = [
+      aws_ecr_repository.analytics.arn
+    ]
+  }
+}
+
 ######################
 # CodeBuild Resources
 ######################
@@ -309,9 +329,14 @@ resource "aws_iam_role_policy_attachment" "codebuild" {
 }
 
 # Attach the CloudWatchLogs IAM policy to the codebuild role
-resource "aws_iam_role_policy_attachment" "codebuild" {
+resource "aws_iam_role_policy_attachment" "cloudwatchlogs" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
   role       = aws_iam_role.codebuild.name
 }
 
-
+# Attach ECR Policies
+resource "aws_iam_role_policy" "codebuild_ecr_policy" {
+  name_prefix = "codebuild-ecr-policy"
+  role        = aws_iam_role.codebuild.name
+  policy      = data.aws_iam_policy_document.codebuild_ecr_policy.json
+}
