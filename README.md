@@ -39,9 +39,9 @@ For this project, you are a DevOps engineer who will be collaborating with a tea
 
 In this paragraph, I will describe all the steps to deploy the project.
 
-### 1. Configure a Database
+### 1. Bitnami Helm Repo
 
-Set up a Postgres database using a Helm Chart.
+Set up the Bitnami Helm Repo.
 
 ```bash
 helm repo add bitanmi https://charts.bitnami.com/bitnami
@@ -49,9 +49,9 @@ helm repo add bitanmi https://charts.bitnami.com/bitnami
 
 ### 2. Deploy the infrastructure
 
-You can create the EKS Cluster via my (custom infra code)[infra/terraform] written in [terraform](https://developer.hashicorp.com/terraform/downloads)
+You can create the EKS Cluster via my [custom infra code](infra/terraform) written in [terraform](https://developer.hashicorp.com/terraform/downloads).
 
-First, update this line with your repo and then deploy with the following commands:
+First, update [this line](https://github.com/abdelino17/coworking-space/blob/92f792bf94c311e8ba7907299a7c0f3aaf78a0ea/infra/terraform/main.tf#L297) with your repo and then deploy the infra with the following commands:
 
 ```bash
 terraform init
@@ -59,7 +59,7 @@ terraform init
 terraform apply
 ```
 
-The code will create the following:
+This code will create the following:
 
 - EKS Cluster
 - ECR
@@ -68,23 +68,25 @@ The code will create the following:
 
 ### 3. Install PostgreSQL Helm Chart
 
-This Chart requires `aws-ebs-csi-driver` for persistent volume. If you are using your own AWS Account, you can uncomment the file [`ebs-csi-driver.tf`](infra/terraform/csi-driver.tf) to install it.
+The [PostgreSQL Helm Chart](https://artifacthub.io/packages/helm/bitnami/postgresql) requires `aws-ebs-csi-driver` for persistent volume. If you are using your own AWS Account, you can uncomment the file [ebs-csi-driver.tf](infra/terraform/csi-driver.tf) to install it.
 
-However, I noticed that the Udacity Account is missing these mandatory permissions:
+However, I noticed that the Udacity Account is missing the following permissions:
 
 - iam:CreateOpenIDConnectProvider
 - iam:ListOpenIDConnectProviders
 - iam:GetOpenIDConnectProvider
 
-Unfortunately without them, it's impossible to use EBS. So I decided to use the `local-storage` Storage Class.
+Unfortunately without them, it was impossible to use EBS.
 
-You need to set the [node affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) for local-storage.
+So I decided to use the `local-storage` Storage Class.
+
+For that, you need to set the [node affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) first.
 
 Get the node DNS with the command:
 
 `$ kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="InternalDNS")].address }`
 
-Update the value in the [configuration](infra/k8s/local-storage.yaml). Then, deploy it!
+Update the value in the [configuration](https://github.com/abdelino17/coworking-space/blob/92f792bf94c311e8ba7907299a7c0f3aaf78a0ea/infra/k8s/local-storage.yaml#L29). Then, deploy it!
 
 `$ kubectl apply -f infra/k8s/local-storage.yaml`
 
@@ -123,7 +125,7 @@ kubectl port-forward --namespace default svc/postgresql 5432:5432 &
 
 ### 1. Running CodeBuild
 
-To use CodeBuild, the easiest way is to add a `buildspec` file to your repo.
+To use CodeBuild, the easiest way is to add a `buildspec.yaml` file to your repo.
 
 Replace the `AWS_ACCOUNT_ID` with yours.
 
@@ -149,7 +151,7 @@ phases:
       - docker push AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/analytics:latest
 ```
 
-A deployment should be run if your configuration is right!
+A build should be run if your configuration is right!
 
 ### 2. Analytics deployments
 
