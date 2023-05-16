@@ -170,7 +170,7 @@ $ kubectl apply -f analytics/deployment/service.yaml
 Get the application URL with this command:
 
 ```bash
-export BASE_URL=$(kubectl get services analytics --output jsonpath='{.status.loadBalancer.ingress[0].hostname})'
+export BASE_URL=$(kubectl get services analytics --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 ```
 
 - Generate report for check-ins grouped by dates
