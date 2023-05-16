@@ -7,16 +7,17 @@ For this project, you are a DevOps engineer who will be collaborating with a tea
 ## Deliverables
 
 1. [`Dockerfile`](analytics/Dockerfile)
-2. [Screenshot of AWS CodeBuild pipeline](screenshots/codebuild_pipeline.png)
-3. [Screenshot of AWS ECR repository for the application's repository](screenshots/aws_ecr.png)
-4. [Screenshot of `kubectl get svc`](screenshots/kubectl_svc.png)
-5. [Screenshot of `kubectl get pods`](screenshots/kubectl_pods.png)
-6. [Screenshot of `kubectl describe svc postgresql`](screenshots/kubectl_describe_svc_db.png)
-7. [Screenshot of `kubectl describe svc analytics`](screenshots/kubectl_describe_svc_analytics.png)
-8. [Screenshot of `kubectl describe deployment analytics`](screenshots/kubectl_describe_deploy_analytics.png)
-9. [All Kubernetes config files used for deployment (ie YAML files)](analytics/k8s)
-10. [Screenshot of AWS CloudWatch logs for the application](screenshots/analytics_logs.png)
-11. `README.md`: You are reading it!
+2. [Screenshot of Github Actions](screenshots/github_action_pipeline.png)
+3. [Screenshot of AWS CodeBuild pipeline](screenshots/codebuild_result.png)
+4. [Screenshot of AWS ECR repository for the application's repository](screenshots/aws_ecr.png)
+5. [Screenshot of `kubectl get svc`](screenshots/kubectl_svc.png)
+6. [Screenshot of `kubectl get pods`](screenshots/kubectl_pods.png)
+7. [Screenshot of `kubectl describe svc postgresql`](screenshots/kubectl_describe_svc_db.png)
+8. [Screenshot of `kubectl describe svc analytics`](screenshots/kubectl_describe_svc_analytics.png)
+9. [Screenshot of `kubectl describe deployment analytics`](screenshots/kubectl_describe_deploy_analytics.png)
+10. [All Kubernetes config files used for deployment (ie YAML files)](analytics/k8s)
+11. [Screenshot of AWS CloudWatch logs for the application](screenshots/analytics_logs.png)
+12. `README.md`: You are reading it!
 
 ## Dependencies
 
