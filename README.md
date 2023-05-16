@@ -44,7 +44,7 @@ In this paragraph, I will describe all the steps to deploy the project.
 Set up the Bitnami Helm Repo.
 
 ```bash
-helm repo add bitanmi https://charts.bitnami.com/bitnami
+helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
 ### 2. Deploy the infrastructure
@@ -84,11 +84,11 @@ For that, you need to set the [node affinity](https://kubernetes.io/docs/concept
 
 Get the node DNS with the command:
 
-`$ kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="InternalDNS")].address }`
+`$ kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="InternalDNS")].address }'`
 
-Update the value in the [configuration](https://github.com/abdelino17/coworking-space/blob/92f792bf94c311e8ba7907299a7c0f3aaf78a0ea/infra/k8s/local-storage.yaml#L29). Then, deploy it!
+Update the value in the [configuration](https://github.com/abdelino17/coworking-space/blob/92f792bf94c311e8ba7907299a7c0f3aaf78a0ea/infra/deployment/local-storage.yaml#L29). Then, deploy it!
 
-`$ kubectl apply -f infra/k8s/local-storage.yaml`
+`$ kubectl apply -f infra/deployment/local-storage.yaml`
 
 Now you can install the postgresql with the `local-storage` storageclass.
 
@@ -155,14 +155,14 @@ A build should be run if your configuration is right!
 
 ### 2. Analytics deployments
 
-Update the [analytics application](analytics/k8s/deployment.yaml) config with your repo URL.
+Update the [analytics application](analytics/deployment/deployment.yaml) config with your repo URL.
 
 Then run these commands to deploy:
 
 ```bash
-$ kubectl apply -f analytics/k8s/deployment.yaml
+$ kubectl apply -f analytics/deployment/deployment.yaml
 
-$ kubectl apply -f analytics/k8s/service.yaml
+$ kubectl apply -f analytics/deployment/service.yaml
 ```
 
 ### 3. Verifying The Application

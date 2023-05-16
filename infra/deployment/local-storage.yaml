@@ -26,4 +26,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - ip-10-0-1-193.ec2.internal
+                - ip-10-0-1-231.ec2.internal
